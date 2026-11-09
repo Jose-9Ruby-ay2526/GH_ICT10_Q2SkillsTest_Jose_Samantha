@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Non-Metal Elements</title>
+
+    <link rel="stylesheet" href="https://pyscript.net/releases/2026.7.3/core.css" />
+    <script type="module" src="https://pyscript.net/releases/2026.7.3/core.js"></script>
+
+<style>
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background-color: #fff0f3;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        color: #59464c;
+    }
+
+    .app-window {
+        background-color: #ffffff;
+        width: 400px;
+        border-radius: 20px;
+        padding: 15px;
+        box-shadow: 0 10px 30px rgba(221, 160, 170, 0.15);
+        box-sizing: border-box;
+    }
+
+    .title-section {
+        text-align: center;
+        background-color: #f5aebe;
+        padding: 18px 12px;
+        margin-bottom: 25px;
+        border-radius: 14px;
+    }
+
+    .title-section h1 {
+        margin: 0;
+        font-size: 22px;
+        color: #ffffff;
+        font-weight: 700;
+        letter-spacing: 0;
+        text-transform: capitalize;
+    }
+
+    .title-section p {
+        margin: 5px 0 0 0;
+        font-size: 13px;
+        color: #fff4f6;
+    }
+
+    .note-box {
+        background-color: #fff0f3;
+        border-radius: 12px;
+        padding: 14px;
+        font-size: 12px;
+        color: #9c6876;
+        line-height: 1.6;
+        margin-bottom: 25px;
+    }
+
+    .field-group {
+        margin-bottom: 20px;
+    }
+
+    .field-label {
+        font-size: 12px;
+        font-weight: 600;
+        color: #9c6876;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .text-input {
+        width: 100%;
+        padding: 12px;
+        border: 1.5px solid #f8dce3;
+        border-radius: 10px;
+        font-size: 15px;
+        color: #59464c;
+        background-color: #fffbfc;
+        box-sizing: border-box;
+        outline: none;
+        transition: border-color 0.2s;
+    }
+
+    .text-input:focus {
+        border-color: #e9a5b5;
+    }
+
+    .action-button {
+        width: 100%;
+        background-color: #e9a5b5;
+        color: #ffffff;
+        border: none;
+        padding: 14px;
+        font-size: 14px;
+        font-weight: 600;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        margin-bottom: 25px;
+    }
+
+    .action-button:hover {
+        background-color: #d98da2;
+    }
+
+    .results-panel {
+        border-top: 1px solid #f8dce3;
+        padding-top: 20px;
+    }
+
+    .results-heading {
+        font-size: 13px;
+        font-weight: 600;
+        color: #d98da2;
+        margin-bottom: 12px;
+    }
+
+    .results-card {
+        background-color: #fffbfc;
+        border: 1px solid #f8dce3;
+        padding: 15px;
+        border-radius: 12px;
+        font-size: 14px;
+        line-height: 1.8;
+    }
+
+    .results-card span {
+        color: #b99ca4;
+        display: inline-block;
+        width: 120px;
+    }
+</style>
+</head>
+
+<body>
+
+    <div class="app-window">
+
+        <div class="title-section">
+            <h1>Non-Metal Elements</h1>
+            <p>Periodic Table Information Finder</p>
+        </div>
+
+        <div class="note-box">
+            Type in the symbol of a non-metal element to view its current metrics (e.g., H, O, Cl, Ne, Rn).
+        </div>
+
+        <div class="field-group">
+            <label class="field-label" for="searchField">Element Symbol</label>
+            <input type="text" class="text-input" id="searchField" value="rn">
+        </div>
+
+        <button class="action-button" onclick="findMetrics()">Find Details</button>
+
+        <div class="results-panel">
+            <div class="results-heading">Results</div>
+
+            <div class="results-card" id="dataView">
+                <div><span>Symbol:</span> <strong>Rn</strong></div>
+                <div><span>Element Name:</span> <strong>Radon</strong></div>
+                <div><span>Atomic Number:</span> <strong>86</strong></div>
+                <div><span>Atomic Mass:</span> <strong>222</strong></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const tableData = {
+            "rn": { name: "Radon", number: 86, mass: 222 },
+            "h": { name: "Hydrogen", number: 1, mass: 1.008 },
+            "o": { name: "Oxygen", number: 8, mass: 15.999 },
+            "cl": { name: "Chlorine", number: 17, mass: 35.45 },
+            "ne": { name: "Neon", number: 10, mass: 20.180 }
+        };
+
+        function findMetrics() {
+            const currentInput = document.getElementById("searchField").value.trim().toLowerCase();
+            const outputFrame = document.getElementById("dataView");
+
+            if (tableData[currentInput]) {
+                const item = tableData[currentInput];
+
+                outputFrame.innerHTML = `
+                    <div><span>Symbol:</span> <strong>${currentInput.toUpperCase()}</strong></div>
+                    <div><span>Element Name:</span> <strong>${item.name}</strong></div>
+                    <div><span>Atomic Number:</span> <strong>${item.number}</strong></div>
+                    <div><span>Atomic Mass:</span> <strong>${item.mass}</strong></div>
+                `;
+            } else {
+                outputFrame.innerHTML = `
+                    <div style="color: #d98da2; text-align: center;">
+                        Could not locate that symbol in the database.
+                    </div>
+                `;
+            }
+        }
+    </script>
+
+</body>
+
+</html>
